@@ -5,7 +5,7 @@
 
 LiquidCrystal_I2C lcd(0x27, 16, 2); //figure out how to use LCD
 
-const float Vtrip = 30; //value for trip voltage can be changed based on client specification//
+const float Vtrip = 18; //value for trip voltage can be changed based on client specification//
 
 //int flag;
 int tf = 1;
