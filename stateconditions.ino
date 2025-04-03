@@ -5,7 +5,7 @@
 
 LiquidCrystal_I2C lcd(0x27, 16, 2); //figure out how to use LCD
 
-const float Vtrip = 2; //value for trip voltage can be changed based on client specification//
+const float Vtrip = 30; //value for trip voltage can be changed based on client specification//
 
 //int flag;
 int tf = 1;
@@ -23,7 +23,7 @@ void setup() {
   lcd.backlight();
   pinMode(2, OUTPUT); //digital pwm 2, relay switch
   pinMode(4, OUTPUT); //digital pwm 4, trip system
-  pinMode(A1, INPUT); //sensor input
+  pinMode(A0, INPUT); //sensor input
   pinMode(8, INPUT); //switch input
 }
 
@@ -31,9 +31,9 @@ void loop() {
 
 // current sensing module //
 
-float adc = analogRead(A1); //value from the line
-float voltage = adc*(5/1023.0); 
-bool trip = voltage < Vtrip; //overcurrent tripping condition//
+float adc = analogRead(A0); //value from the line
+float voltage = adc*(5/1023.0) * 1000; //in mV
+bool trip = voltage > Vtrip; //overcurrent tripping condition//
 
 // state conditions //
 
@@ -78,7 +78,7 @@ else if(digitalRead(8) == HIGH && tf == 1) {
   lcd.print("us");
   lcd.setCursor(0,1);
   lcd.print("Relay Reset");
-  //lcd.print(vline);
+  //lcd.print(voltage);
   delay(3000);
   
   lcd.clear();
